@@ -1,4 +1,4 @@
-package br.com.akinicchi.authencation_authorization;
+package br.com.akinicchi.authentication_authorization;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
