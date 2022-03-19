@@ -1,6 +1,7 @@
 package br.com.akinicchi.authentication_authorization.config;
 
 import br.com.akinicchi.authentication_authorization.security.FilterRequest;
+import br.com.akinicchi.authentication_authorization.utils.ConstantUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
         http.authorizeRequests()
-                .antMatchers("/public-key")
+                .antMatchers(ConstantUtil.PUBLIC_KEY_URL)
                     .authenticated()
                 .anyRequest()
                     .permitAll()

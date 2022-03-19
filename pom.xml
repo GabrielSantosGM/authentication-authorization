@@ -8,9 +8,10 @@
 		<version>2.6.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>br.com.akinicchi</groupId>
 	<artifactId>authencation_authorization</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>authencation_authorization</name>
 	<description>Personal project for authentication and authorization</description>
 

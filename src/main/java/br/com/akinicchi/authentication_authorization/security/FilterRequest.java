@@ -2,6 +2,7 @@ package br.com.akinicchi.authentication_authorization.security;
 
 import br.com.akinicchi.authentication_authorization.entity.DataApplication;
 import br.com.akinicchi.authentication_authorization.service.DataApplicationService;
+import br.com.akinicchi.authentication_authorization.utils.ConstantUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,10 +31,10 @@ public class FilterRequest extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String pathURI = request.getServletPath();
-        String clientId = request.getHeader("clientId");
-        String secretId = request.getHeader("secretId");
+        String clientId = request.getHeader(ConstantUtil.CLIENT_ID);
+        String secretId = request.getHeader(ConstantUtil.SECRET_ID);
 
-        if (pathURI.equals("/public-key")) {
+        if (pathURI.equals(ConstantUtil.PUBLIC_KEY_URL)) {
             if (!clientId.isEmpty() && !secretId.isEmpty()) {
                 DataApplication dataApplication = dataApplicationService.findByIdApplication(clientId, secretId);
                 final UsernamePasswordAuthenticationToken authentication =

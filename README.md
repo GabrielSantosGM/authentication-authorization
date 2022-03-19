@@ -1,2 +1,2 @@
 # authentication-authorization
-Personal project dedicated to studies on authentication and authorization with spring security.
+Personal project dedicated to studies on authentication and authorization with spring security, and integrated with gcp.
