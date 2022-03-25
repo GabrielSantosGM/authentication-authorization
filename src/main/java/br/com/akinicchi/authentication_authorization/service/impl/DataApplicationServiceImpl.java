@@ -1,11 +1,11 @@
 package br.com.akinicchi.authentication_authorization.service.impl;
 
 import br.com.akinicchi.authentication_authorization.entity.DataApplication;
-import br.com.akinicchi.authentication_authorization.exception.SecretIdIncorrectException;
+import br.com.akinicchi.authentication_authorization.exception.HeaderParamsAuthenticationException;
+import br.com.akinicchi.authentication_authorization.exception.MessageErrorEnum;
 import br.com.akinicchi.authentication_authorization.repository.DataApplicationRepository;
 import br.com.akinicchi.authentication_authorization.service.DataApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -22,13 +22,18 @@ public class DataApplicationServiceImpl implements DataApplicationService {
     @Override
     public DataApplication findByIdApplication(String clientId, String secretId) {
         Mono<DataApplication> response = dataApplicationRepository.findById(clientId);
-        DataApplication data = response.block();
-        if (data != null) {
-            if (!data.getSecretId().equals(secretId)) {
-                throw new SecretIdIncorrectException();
-            }
-            return data;
+        return this.validate(response, secretId);
+    }
+
+    private DataApplication validate(Mono<DataApplication> monoDataApplication, String secretId) {
+        DataApplication dataApplication = monoDataApplication.block();
+        if (dataApplication == null) {
+            throw new HeaderParamsAuthenticationException(MessageErrorEnum.FIRST_ROLE);
         }
-        throw new UsernameNotFoundException("APPLICATION NOT FOUND");
+
+        if (!dataApplication.getSecretId().equals(secretId)) {
+            throw new HeaderParamsAuthenticationException(MessageErrorEnum.SECOND_ROLE);
+        }
+        return dataApplication;
     }
 }
