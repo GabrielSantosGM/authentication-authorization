@@ -1,6 +1,6 @@
 package br.com.akinicchi.authentication_authorization.config;
 
-import br.com.akinicchi.authentication_authorization.security.FilterRequest;
+import br.com.akinicchi.authentication_authorization.security.RequestFilter;
 import br.com.akinicchi.authentication_authorization.utils.ConstantUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,9 +13,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final FilterRequest requestFilter;
+    private final RequestFilter requestFilter;
 
-    public SecurityConfig(FilterRequest requestFilter) {
+    public SecurityConfig(RequestFilter requestFilter) {
         this.requestFilter = requestFilter;
     }
 

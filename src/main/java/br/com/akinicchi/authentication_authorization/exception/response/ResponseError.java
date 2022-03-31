@@ -2,20 +2,18 @@ package br.com.akinicchi.authentication_authorization.exception.response;
 
 import br.com.akinicchi.authentication_authorization.exception.MessageErrorEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
-@Builder
 @JsonIgnoreProperties(value = {"messageErrorEnum", "sdf"})
 public class ResponseError {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
     private MessageErrorEnum messageErrorEnum;
+
     private String timestamp;
     private String code;
     private String error;

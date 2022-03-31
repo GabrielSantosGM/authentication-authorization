@@ -22,12 +22,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Component
-public class FilterRequest extends OncePerRequestFilter {
+public class RequestFilter extends OncePerRequestFilter {
 
     private final DataApplicationService dataApplicationService;
 
     @Autowired
-    public FilterRequest(DataApplicationService dataApplicationService) {
+    public RequestFilter(DataApplicationService dataApplicationService) {
         this.dataApplicationService = dataApplicationService;
     }
 
@@ -36,7 +36,6 @@ public class FilterRequest extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         ResponseBody<String> responseBody = new ResponseBody<>();
-        response.setContentType("application/json");
 
         String pathURI = request.getServletPath();
         String clientId = request.getHeader(ConstantUtil.CLIENT_ID);
@@ -65,6 +64,7 @@ public class FilterRequest extends OncePerRequestFilter {
     private void handlerRequestFilter(HttpServletResponse response,
                                       ResponseBody<String> responseBody,
                                       HeaderParamsAuthenticationException exception) throws IOException {
+        response.setContentType(ConstantUtil.CONTENT_TYPE_JSON);
         ResponseError error = (exception == null)
                 ? new ResponseError(MessageErrorEnum.THIRD_ROLE)
                 : new ResponseError(exception.getMessageErrorEnum());

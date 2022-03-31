@@ -2,7 +2,6 @@ package br.com.akinicchi.authentication_authorization.controller;
 
 import br.com.akinicchi.authentication_authorization.exception.response.ResponseBody;
 import br.com.akinicchi.authentication_authorization.utils.ConstantUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

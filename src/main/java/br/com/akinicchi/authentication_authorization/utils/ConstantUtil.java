@@ -3,6 +3,7 @@ package br.com.akinicchi.authentication_authorization.utils;
 public class ConstantUtil {
 
     public static final String ACCESS_APPLICATION = "access_application";
+    public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String PUBLIC_KEY_URL = "/public-key";
     public static final String CLIENT_ID = "clientId";
     public static final String SECRET_ID = "secretId";
