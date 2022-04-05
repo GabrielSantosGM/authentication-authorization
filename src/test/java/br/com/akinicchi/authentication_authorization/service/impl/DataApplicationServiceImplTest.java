@@ -52,7 +52,7 @@ class DataApplicationServiceImplTest {
     }
 
     @Test
-    void getDataApplicationWhenReturnNoContent() {
+    void getDataApplicationWhenReturnNotFound() {
         when(dataApplicationRepository.findById(anyString())).thenReturn(Mono.empty());
         ResponseBody<DataApplication> responseBodyWithError = ResponseBodyMock
                 .createResponseBodyWithoutDataApplication(responseError);
@@ -62,7 +62,7 @@ class DataApplicationServiceImplTest {
         } catch (HeaderParamsAuthenticationException ex) {
             assertNotNull(responseBodyWithError.getResponseError());
             assertNotNull(ex);
-            assertEquals(HttpStatus.NO_CONTENT, ex.getMessageErrorEnum().getHttpStatus());
+            assertEquals(HttpStatus.NOT_FOUND, ex.getMessageErrorEnum().getHttpStatus());
             assertEquals(HeaderParamsAuthenticationException.class, ex.getClass());
         }
     }

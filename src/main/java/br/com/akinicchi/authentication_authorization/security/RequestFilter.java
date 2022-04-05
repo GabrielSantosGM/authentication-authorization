@@ -35,13 +35,11 @@ public class RequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        ResponseBody<String> responseBody = new ResponseBody<>();
-
         String pathURI = request.getServletPath();
         String clientId = request.getHeader(ConstantUtil.CLIENT_ID);
         String secretId = request.getHeader(ConstantUtil.SECRET_ID);
 
-        if (!pathURI.equals(ConstantUtil.PUBLIC_KEY_URL)) {
+        if (!pathURI.contains(ConstantUtil.PUBLIC_KEY_URL)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -54,20 +52,21 @@ public class RequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             } catch (HeaderParamsAuthenticationException e) {
-                this.handlerRequestFilter(response, responseBody, e);
+                this.handlerRequestFilter(response, e);
             }
         } else {
-            this.handlerRequestFilter(response, responseBody, null);
+            this.handlerRequestFilter(response, null);
         }
     }
 
     private void handlerRequestFilter(HttpServletResponse response,
-                                      ResponseBody<String> responseBody,
                                       HeaderParamsAuthenticationException exception) throws IOException {
-        response.setContentType(ConstantUtil.CONTENT_TYPE_JSON);
+        ResponseBody<String> responseBody = new ResponseBody<>();
         ResponseError error = (exception == null)
                 ? new ResponseError(MessageErrorEnum.THIRD_ROLE)
                 : new ResponseError(exception.getMessageErrorEnum());
+        response.setStatus(error.getMessageErrorEnum().getHttpStatus().value());
+        response.setContentType(ConstantUtil.CONTENT_TYPE_JSON);
         responseBody.setResponseError(error);
         PrintWriter output = response.getWriter();
         output.print(new ObjectMapper().writeValueAsString(responseBody));
